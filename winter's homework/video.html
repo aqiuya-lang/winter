@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频详情页</title>
+    <link rel="stylesheet" href="video.css">
+</head>
+<body>
+   <div class="left">
+       <span class="lastone-artwork" title="【动漫剪辑】这是我最后一个作品了，感谢B站各位半年的陪伴 ♥">【动漫剪辑】这是我最后一个作品了，感谢B站各位半年的陪伴 ♥</span>
+       <div class="cartoon">
+           <a href="https://www.bilibili.com/v/douga/">动画 ></a>
+           <a href="https://www.bilibili.com/v/douga/mad/">MAD·AMV</a>
+           <span>2020-02-08 18:37:07</span>
+        </div>
+       <div class="message">
+           <span>22.8万播放 · 2167弹幕</span> 
+           <span>未经作者授权，禁止转载</span>
+        </div>
+        <div id="player">
+            <video id="video" src="./video.mp4"></video>
+            <div class="controls">
+                 <!-- 时间 -->
+                 <div class="timer">
+                    <span id="current">00:00:00</span> /
+                    <span id="total">00:00:00</span>
+                </div>
+                <img src="./video.img/play.png" class="switch play">
+                <img src="./video.img/pause.png" class="switch pause">
+               
+                <!-- 进度条 -->
+                <div id="progress">
+                    <div id="loaded"></div>
+                    <div id="point"></div>
+                </div>
+                 <!-- 全屏 -->
+                <img src="./video.img/volume.png" id="volume">
+                <img src="./video.img/biggest.png" id="big">
+            </div>
+        </div>
+        <input id="content" type="text" placeholder="发个弹幕友善的见证一下">
+        <span id="send">发送</span>
+        <div class="triplet">
+   
+        </div>
+        
+        <div class="wrap">
+        <ul id="list">
+          
+        </ul>
+        <img class="my-face" src="./video.img/face.webp">
+        <textarea placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的评论" id="text"></textarea><br>
+        <input  id="input" type="button" value="发表评论">
+       </div> 
+
+
+   </div>
+   <div class="right">
+       <div class="right-face">
+           <img src="./video.img/face.webp">
+           <span>小卡KKKKK</span>
+       </div>
+       <span class="right-care">+ 关注 757</span>
+       <div class="right-content">
+           <p>相关推荐</p>
+        <div>
+            <img src="./video.img/about1.webp" alt="">
+            <span class="right-sp1">【二十四小时不循环】圆周率之歌 （42万位） -葛平</span>
+            <span class="right-sp2">526.4万播放·57.6万弹幕</span>
+        </div>
+        <div>
+            <img src="./video.img/about2.webp" alt="">
+            <span class="right-sp1">10小时倒计时</span>
+            <span class="right-sp2">12.0万播放·3562弹幕</span>
+        </div>
+        <div>
+            <img src="./video.img/about3.webp" alt="">
+            <span class="right-sp1">喵内~喵内~喵内~</span>
+            <span class="right-sp2">555.1万播放·2435弹幕</span>
+        </div>
+        <div>
+            <img src="./video.img/about5.webp" alt="">
+            <span class="right-sp1">萌龙循-^^-</span>
+            <span class="right-sp2">74856播放·12万弹幕</span>
+        </div>
+        <div>
+            <img src="./video.img/about6.webp" alt="">
+            <span class="right-sp1">妮可·妮可·妮可</span>
+            <span class="right-sp2">4856播放·1234弹幕</span>
+        </div>
+       </div>
+
+   </div>
+
+
+    <script src="video.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,255 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.left{
+    margin-left: 15%;
+    margin-top: 40px;
+}
+.lastone-artwork{
+    color: #212121;
+    font-size: 18px;
+}
+.cartoon a{
+    text-decoration: none;
+    color: #999999;
+    font-size: 13px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.cartoon a:hover{
+    color: #00a1d6;
+}
+.cartoon span,.message span{
+    color: #999999;
+    font-size: 13px;
+    margin: 20px;
+} 
+#player{
+    position: relative;
+    width: 640px;
+}
+video{
+    position: relative;
+    width: 640px;
+    margin-top: 20px;
+}
+.controls{
+    position: absolute;
+    width: 640px;
+    display: none;
+}
+video:hover+.controls{
+    display: block;
+}
+.controls:hover{
+    display: block;
+}
+.controls img{
+    width: 20px;
+    cursor: pointer;
+    position: absolute;
+}
+.timer{
+    margin-top: -60px;
+    color: #ffffff;
+}
+#progress{
+    position: relative;
+    width: 85%;
+    margin: auto;
+    border-radius: 15px;
+    border: 12px solid transparent;
+    height: 10px;
+    background-color:rgba(92, 83, 88, 0.658);
+    overflow: hidden;
+}
+#loaded{
+    position: absolute;
+    background-color: rgb(236, 238, 232);
+    height: 10px;
+    /* display: none; */
+}
+#point{
+    position: absolute;
+    width: 10px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 1px solid rgba(82, 80, 80, 0.699);
+    z-index: 2332;
+    top: 0px;
+    cursor: pointer;
+    /* display: none; */
+}
+.switch{
+    left: 8px;
+    bottom: 15px;
+}
+.pause{
+    display: none;
+}
+#big,#small{
+    right: 8px;
+    bottom: 10px;
+}
+#volume{
+    width: 25px;
+    
+    bottom: 45px;
+    right: 10px;
+}
+#small{
+    display: none;
+}
+#content{
+    margin-left: 120px;
+    margin-right: -10px;
+    width: 300px;
+    padding: 0px 20px;
+    height: 25px;
+    line-height: 25px;
+}
+#send{
+    display: block;
+    background-color: #00a1d6;
+    color: #fff;
+    height: 28px;
+    width: 60px;
+    line-height: 28px;
+    text-align: center;
+    font-size: 12px;
+    margin-left: 465px;
+    margin-top: -28px;
+    border-color: transparent;
+    cursor: pointer;
+}
+.danmu{
+    color: pink;
+    font-size: 15px;
+    position: absolute;
+    white-space:nowrap;
+}
+#list{
+    position: relative;
+    width: 40%;
+}
+#list li{
+    margin-top: 20px;
+   
+}
+.comment{
+    list-style: none;
+    color: #212121;
+    font-size: 15px;
+}
+.comment img{
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.comment button{
+    width: 60px;
+    background-color: #00a1d6;
+    color: #fff;
+    font-size: 13px;
+    border: transparent;
+    position: absolute;
+    right: -30px;
+    margin-top: 30px;
+}
+.my-face{
+    display: block;
+    margin-top: 50px;
+    margin-right: 40px;
+    border-radius: 50%;
+}
+.triplet{
+    margin-top: 10px;
+    height: 50px;
+    width: 40%;
+    /* background-color: hotpink; */
+}
+textarea{
+    font-size: 12px;
+    background-color: #f4f5f7;
+    border: 1px solid #e5e9ef;
+    overflow: auto;
+    border-radius: 4px;
+    color: #555;
+    width: 30%;
+    height: 65px;
+    padding: 5px 10px;
+    margin-left: 70px;
+    margin-top: -50px;
+}
+#input{
+    width:80px;
+    height: 74px;
+    display: block;
+    margin-left: 500px;
+    margin-top: -80px;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #00a1d6;
+    border: 1px solid #00a1d6;
+}
+.right{
+    position: absolute;
+   top: 50px;
+   right: 10%;
+    width: 30%;
+}
+.right-face img{
+    border-radius: 50%;
+}
+.right-face span{
+    display: block;
+    margin-left: 70px;
+    margin-top: -40px;
+}
+.right-care{
+    display: block;
+    background: #00a1d6;
+    margin-top: 30px;
+    color: #fff;
+    width: 120px;
+    text-align: center;
+    margin-left: 80px;
+    line-height: 32px;
+    height: 32px;
+    border-radius: 2px;
+    justify-content: center;
+    cursor: pointer;
+}
+.right-content div{
+    height: 90px;
+    margin-top: 8px;
+}
+.right-content img{
+    border-radius: 4px;
+    width: 160px;
+    height: 90px;
+}
+.right-sp1{
+    width: 180px;
+    display: block;
+    color: #505050;
+    margin-left: 170px;
+    margin-top: -90px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.right-sp1:hover{
+    color: #00a1d6;
+}
+.right-sp2{
+    display: block;
+   margin-left: 170px;
+   color: #999999;
+   font-size: 12.5px;
+   margin-top: 40px;
+}

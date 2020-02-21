@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- <style type="text/css">
+    	#mydiv{
+    	position: absolute;
+    	left:50%;
+    	top:50%;
+    	margin-left: -200px;
+    	margin-top: -120px;
+    	}
+    	.mouseOver{
+    		background: #708090;
+    		color:#FFFAFA;
+    	}
+    	.mouseOut{
+    		background: #FFFAFA;
+    		color:#000;
+    	}
+    </style> -->
+    
+</head>
+<body>
+
+     
+     <button onclick = "getData()">获取数据</button>
+    <table>
+        <tr>
+            <th>编号</th>
+            <th>姓名</th>
+            <th>城市</th>
+            <th>座右铭</th>
+        </tr>
+        <tbody id="myTbody">
+            <td>1001</td>
+            <td>张三</td>
+            <td>辽宁 大连</td>
+            <td>啦啦啦啦啦</td>
+        </tbody>
+    </table>  -->
+    <!-- <script src="https://cdn.bootcss.com/Mock.js/1.0.1-beta3/mock-min.js"></script>
+    <script>
+        var mytbody = document.getElementById('myTbody');
+        function getData () {
+            var str = '';
+            var user = Mock.mock({
+            'list|10':[{
+                'id|+1': 1001,
+                name:'@cname',
+                city:'@city(ture)',
+                word:'@cparagraph(3,5)'
+            }]
+        })
+        user.list.forEach((item,index)=>{
+            str += `<tbody>
+            <td>${item.id}</td>
+            <td>${item.name}</td>
+            <td>${item.city}</td>
+            <td>${item.word}</td>
+            </tbody>`
+
+          })
+          mytbody.innerHTML = str;
+
+        }
+    
+    </script> -->
+    <!-- <script>
+        var mytbody = document.getElementById('myTbody');
+        function getData () {
+            var xml = new XMLHttpRequest();
+            xml.open("GET",'https://www.fastmock.site/mock/0e6848507c798e47b681311ea27ebc47/bilibili/test' );
+            xml.send();
+            xml.onload = function () {  //或者写成 xml.onreadystatechange=function () {}
+                if(xml.readyState == 4 && xml.status == 200){
+                    // console.log(xml.response)
+                    var res = JSON.parse(xml.response);//转换为json对象  或者写成var res = JSON.parse(xml.responsetExt)
+                    //JSON.stringify 将json对象转换为字符串
+                    console.log(res.user);
+                    function showData (data) {
+                    var str = '';
+                    data.forEach((item,index)=>{
+                        str += `<tbody>
+                    <td>${item.name}</td>
+                    <td>${item.age}</td>
+                    <td>${item.sex}</td>
+                    <td>${item.city}</td>
+                    </tbody>`
+                    })
+                    mytbody.innerHTML = str;
+                }
+                    showData(res.user)
+                }
+            }
+        } -->
+    <!-- </script> 
+ -->
+
+
+<div>  
+ <input type="text" class="input" />
+<button class="btn">search</button>
+<ul class="song-list"></ul>
+</div>
+<script>
+const API = 'https://music.niubishanshan.top/api/v2/music/search/'
+
+const input = document.querySelector('.input')
+const btn = document.querySelector('.btn')
+const ul = document.querySelector('.song-list')       
+ // Level 2，封装的 ajax 方法
+const ajax = ({ type, url, data, success, error } = {}) => {
+const formatData = (data) => `?${Object.keys(data).reduce((acc, cur) => `${acc}&${cur}=${data[cur]}`, '').slice(1)}`
+  // 上面这行等价于下面这个
+  // function formatData(data) {
+  //   let params = '?'
+  //   for (key in data) {
+  //     if (data.hasOwnProperty(key)) {
+  //       params += `${key}=${data[key]}&`
+  //     }
+  //   }
+  //   params.slice(params.length - 1)
+  //   return params
+  // }
+  const upperCaseType = type.toUpperCase()
+  const params = formatData(data)
+
+  const req = new XMLHttpRequest()
+
+  req.onreadystatechange = () => {
+    if (req.readyState === 4) {
+      if (req.status >= 200 && req.status < 300 || req.status === 304) {
+        success(req)
+      } else {
+        error(req)
+      }
+    }
+  }
+
+  if (upperCaseType === 'GET') {
+    req.open(upperCaseType, url + params)
+    req.send()
+  }
+
+  if (upperCaseType === 'POST') {
+    req.open(upperCaseType, url)
+    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+    req.send(params)
+  }
+}
+
+btn.addEventListener('click', () => ajax({
+  type: 'GET',
+  url: API + input.value,
+  success: function (req) {
+    const json = JSON.parse(req.responseText)
+    const { data: { songList } } = json
+    // 解构，这样可读性其实还不如 const songList = json.data.songList，所以没有必要什么时候都用 es6 的简写
+    const html = songList.map(e => `<li>${e.songMid}</li>`).join('')
+    // 其实一次 map 就可以
+    ul.innerHTML = html
+  },
+}))
+</script>
+
+
+
+ <!-- <input type="text" id="username">
+<input type="text" id="age">
+<input type="button" id="btn"> -->
+<!-- <script>  -->
+
+     <!-- //get请求
+    // var btn = document.getElementById('btn');
+    // var userName = document.getElementById('username');
+    // var age = document.getElementById('age');
+    //  btn.onclick = function () {
+    //      var xhr = new XMLHttpRequest();
+    //      var nameValue = userName.value;
+    //      var agevalue = age.value;
+    //      //拼接请求参数
+    //      var params = 'username='+ nameValue + '&age=' + agevalue;
+    //      xhr.open('GET','https://www.fastmock.site/mock/0e6848507c798e47b681311ea27ebc47/bilibili/test?'+params);
+    //      xhr.send();
+    //      xhr.onload = function() {
+    //          console.log(JSON.parse(xhr.responseText))
+    //      }
+
+    //  }  -->
+     <!-- </script> -->
+
+
+
+<!-- <script>
+
+    //post请求
+    var btn = document.getElementById('btn');
+    var userName = document.getElementById('username');
+    var age = document.getElementById('age');
+     btn.onclick = function () {
+         //创建Ajax对象
+         var xhr = new XMLHttpRequest();
+         //获取用户在文本框中输入的值
+         var nameValue = userName.value;
+         var agevalue = age.value;
+         //拼接请求参数
+         var params = 'username='+ nameValue + '&age=' + agevalue;
+         //配置ajax对象
+         xhr.open('POST',' http://47.98.57.152:3000/mock/27/questions/:questionId/followers');
+         //设置请求参数格式的类型（post请求必须要设置）
+         xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+         //发送请求
+         xhr.send(params);
+         ///获取服务端响应的数据
+         xhr.onload = function() {
+             console.log(JSON.parse(xhr.responseText))
+         }
+     } 
+ </script> 
+
+http://47.98.57.152:8080/sign_in    x-www-form-urlencoded -->
+
+<!-- <script>
+ //向服务器端传递JSON格式的请求参数 
+
+//1.创建ajax对象
+var xhr = new XMLHttpRequest();
+//2.告诉Ajax对象要向哪发送请求，以什么方式发送请求
+//1）请求方式  2）请求地址
+xhr.open("post",' http://47.98.57.152:3000/mock/27/questions/:questionId/followers');
+//通过请求头告诉服务器端，客户端向服务器端传递的请求参数的格式是什么
+xhr.setRequestHeader('Content-Type','application/json');
+//JSON.stringify()将json对象转换为json字符串
+//3.发送请求
+xhr.send(JSON.stringify({name:'list',age:23}));
+//4.获取服务器端响应到客户端的数据
+xhr.onload = function () {
+    console.log(xhr.responseText)
+}
+
+</script> -->
+
+<!-- 请求参数的格式
+
+
+1。appliciation/x-www-form-urlencoded   name=zhangsan&age=20&sex=男
+2.application/json   {name:'zhangsna',age:23,sxe:'男'}
+3.在请求头中指定Content-Type属性值是appliciation/json，告诉服务器当地请求参数格式是json
+JSON.stringify() 将json对象转换为json字符串
+注意：get请求是不能提交json对象数据格式的，传统网站的表单提交也是不支持json对象数据格式的 -->
+
+
+
+
+
+
+
+<!-- 
+Ajax封装
+ajax({
+    type: 'get',
+    url: 'http://www.example.com',
+    success:function (data) {
+        console.log(data);
+    }
+}) -->
+
+
+<!-- 
+<script> -->
+    <!-- function ajax (options) {
+        //存储的是默认值
+        var defaults = {
+            type:'get',
+            url: '',
+            data: {},
+            head: {
+                'Content-Type':'application/x-www-form-urlencode'
+            },
+            success:{},
+            error:{}
+        }
+        //使用options对象中的属性defaults对象中的属性
+        Object.assign(defaults,options)
+        //创建ajax对象
+        var xhr = new XMLHttpRequest ();
+        //拼接请求参数的变量
+        var params = '';
+        //循环用户传递进来的对象格式参数
+        for (var attr in defaults.data) {
+            //将参数转换为字符串格式
+            params += attr + '=' + defaults.data[attr] + '&';
+        }
+        //将参数最后面的&截取掉
+        //将截取的结果重新赋值给params变量
+        params = params.substr(0,params.length-1);
+
+        //判断请求方式
+        if (defaults.type == "get") {
+            defaults.url = defaults.url + '?' + params;
+        }
+        //配置ajax对象
+        xhr.open(defaults.type,defaults.url);
+        //如果请求方式为post
+        if (defaults.type == 'post') {
+            //用户希望的向服务器端传递的请求参数的类型
+            var contentType = defaults.head['Content-Type']
+            //设置请求参数格式的类型
+            xhr.setRequestHeader('Content-Type', contentType);
+            //判断用户希望的请求参数格式类型
+            //如果类型为json
+            if (contentType == 'application/json') {
+                //向服务器端传递json数据格式的参数
+                xhr.send(JSON.stringify(defaults.data))
+            }else{
+                //向服务器端传递普通类型的请求参数
+                xhr.send(params);
+            }
+        }else{
+            //发送请求
+            xhr.send();
+        }
+        //监听xhr对象下面的onload事件
+        //当xhr对象接收完响应数据后触发
+        xhr.onload = function () {
+           // xhr.getResponseHeader() //获取响应头中的数据
+           var contentType = xhr.getResponseHeader('Content-Type');
+           //服务器端返回的数据
+           var responseText = xhr.responseText;
+           //如果响应类型中包含application/json
+           if (contentType.includes('application/json')){
+               //将json字符串转换为json对象
+               responseText = JSON.parse(responseText);
+           }
+
+
+            //当http状态码等于200的时候
+            if (xhr.status == 200) {
+                //请求成功 调用处理成功情况的函数
+                defaults.success(responseText,xhr);
+            }else{
+                //请求失败 调用处理失败情况的函数
+                defaults.error(responseText,xhr);
+            }
+           
+        }
+    }
+    ajax({
+        //请求地址
+        type:'post',
+        url:'http://47.98.57.152:8080/sign_in',
+        
+        success: function (data) {
+            console.log('这里是success函数');
+            console.log(data);
+
+        }
+    })
+</script> -->
+
+
+    
+    
+    <!-- <script type="text/javascript">
+    	var xmlHttp;
+    	//1.获得用户输入内容的关联信息的函数
+    	function getMoreContents(){
+	    	//首先获得用户输入
+	    	var content = document.getElementById("keyword");
+	    	if(content.value == ""){
+	    		//当输入框为空时，清空之前的数据
+	    		clearContent();
+	    		return;
+	    	}
+	    	//alert(content.value);
+	    	//2.然后要给服务器发送用户输入的内容,因为我们采用的是ajax异步发送数据，所以我们要使用xmlHttp对象
+	    	//xmlHttp = 获得xmlHttp对象;
+			xmlHttp = createXMLHttp();  
+			//alert(xmlHttp);  	
+	    	//3.要给服务器发送数据,首先定义一个服务器的地址，
+	    	var url = "search?keyword="+escape(content.value);
+	    	//true表示JavaScript脚本会在send()方法之后继续执行，而不会等待来自服务器的响应。
+	    	xmlHttp.open("GET",url);
+	    	//xmlHttp绑定回调方法，这个回调方法会在xmlHttp状态改变的时候会被调用
+	    	//xmlHttp的状态：0-4，我们只关心4(complete)这个状态，所以说当完成之后，再调用回调函数才有意义。
+	    	xmlHttp.onreadystatechange = callback;
+	    	//参数已经在url中了，不用在此处添加参数
+	    	xmlHttp.send();
+    	}
+    	
+    	
+    	
+    	//获得xmlHttp对象
+    	function createXMLHttp(){
+    		//对于大多数浏览器都适用的
+    		var xmlHttp;
+    		if(window.XMLHttpRequest){
+    			xmlHttp = new XMLHttpRequest();
+    		}
+    		//要考虑浏览器的兼容性
+    		if(window.ActiveXObject){
+    			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+    			//如果浏览器有ActiveXObject对象，但没有Microsoft.XMLHTTP的参数
+    			if(!xmlHttp){
+    				xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+    			}
+    		}
+    		return xmlHttp;
+    	}
+    	//回调函数
+    	function callback(){
+    		//4表示完成
+    		if(xmlHttp.readyState == 4){
+    			//200代表服务器响应成功，404代表资源未找到，500代表服务器内部错误
+    			if(xmlHttp.status == 200){
+    				//交互成功，获得相应的数据，是文本格式。
+    				var result = xmlHttp.responseText;
+    				//解析获得的数据
+    				var json = eval("("+result+")");
+    				//获得这些数据之后，就可以动态的显示数据了。把这些数据展示到输入框下面。
+    				//alert(json);
+    				setContent(json);
+    			}
+    		}
+    	}
+    	//设置关联数据的展示，参数代表服务器传递过来的关联数据
+    	function setContent(contents){
+    		//清空之前的数据
+    		clearContent();
+    		//设置位置
+    		setLocaltion();
+    		//首先获得关联数据的长度，以此来确定生成多少个<tr></tr>
+    		var size = contents.length;
+    		//设置内容
+    		for(var i =0;i < size;i++){
+    			var nextNode = contents[i];//代表json数据的第i个元素
+    			var tr = document.createElement("tr");
+    			var td = document.createElement("td");
+    			td.setAttribute("borde","0");
+    			td.setAttribute("gbcolor","#FFFAFA");
+    			//为td绑定两个样式（鼠标进入和鼠标移出时事件）
+    			td.onmouseover = function(){
+    				this.className = 'mouseOver';
+    			};
+    			td.onmouseout = function(){
+    				this.className = 'mouseOut';
+    			};
+    			td.onclick = function(){
+    				//这个方法实现的是，当用鼠标点击一个关联数据时，关联数据自动填充到输入框中。
+    				
+    			};
+    			td.onmousedown = function(){
+	            	//当鼠标点击一个关联数据时，自动在输入框添加数据
+	            	document.getElementById("keyword").value =this.innerText;
+	
+	           };
+	           //鼠标悬浮于关联数据上时，自动添加到输入框中
+    			 /* td.onmouseover = function(){
+		             this.className = 'mouseOver';
+		             if(td.innerText != null)
+		             document.getElementById("keyword").value =this.innerText;
+				
+				} */
+    			
+    			
+    			//创建一个文本节点
+    			var text = document.createTextNode(nextNode);
+    			td.appendChild(text);
+    			tr.appendChild(td);
+    			document.getElementById("content_table_body").appendChild(tr);
+    		}
+    	}
+    		//清空之前的数据
+    		function clearContent(){
+    			var contentTableBody = document.getElementById("content_table_body");
+    			var size = contentTableBody.childNodes.length;
+    			//删除时，从下往上删
+    			for(var i = size-1;i>=0;i--){
+    				//指定删除第i个子节点
+    				contentTableBody.removeChild(contentTableBody.childNodes[i]);
+    			}
+    			//清除关联数据的外边框
+    			var popDiv = document.getElementById("popDiv").style.border="none";
+    		
+    		}
+    		//当输入框失去焦点时，清空之前的数据
+    		function keywordBlur(){
+    			clearContent();
+    		}
+    		//设置显示关联信息的位置
+    		function setLocaltion(){
+    			//关联信息的显示位置要和输入框一致
+    			var content = document.getElementById("keyword");
+    			var width = content.offsetWidth;//输入框的长度
+    			var left = content["offsetLeft"];//到左边框的距离
+    			var top = content["offsetTop"]+content.offsetHeight;//到顶部的距离(加上输入框本身的高度)
+    			//获得显示数据的div
+                var popDiv = document.getElementById("popDiv");
+                pop.Div.style.border = "gray 1px soild";
+                pop.Div.style.left = left+"px";
+                pop.Div.style.top = top+"px";
+                pop.Div.style.width = width+"px";
+                document.getElementById("content-table").style.width+"px";
+            }
+            </script>
+            <div id="madiv">
+                <!-- 输入框 -->
+                <!-- <input type="text" size="50" id="keyword" onkeyup="getMoreContents()" onblur="keywordBlur()" onfocus="getMoreContents()">
+                <input type="button" value="百度一下" width="50px">
+                <!-- 下面是内容展示区域 -->
+                <!-- <div id="popDiv">
+                    <table id="content-table" bgcolor="#FFFAFA" border="0" cellspacing="0" cellpadding="0">
+                        <tbody id="content_table_body">
+                            <!-- 动态查询出来的数据在这里 -->
+                        <!-- </tbody>
+                    </table>
+                </div>
+            
+            </div>  -->
+            <!-- <input type="text" class="input" />
+            <button class="btn">search</button>
+            <ul class="song-list"></ul>
+          </div>
+        <script>
+        const API = 'https://music.niubishanshan.top/api/v2/music/search/'
+        
+        const input = document.querySelector('.input')
+        const btn = document.querySelector('.btn')
+        const ul = document.querySelector('.song-list') -->      
+        <!-- // Level 2，封装的 ajax 方法
+        const ajax = ({ type, url, data, success, error } = {}) => {
+        const formatData = (data) => `?${Object.keys(data).reduce((acc, cur) => `${acc}&${cur}=${data[cur]}`, '').slice(1)}`
+        //   // 上面这行等价于下面这个
+        //   // function formatData(data) {
+        //   //   let params = '?'
+        //   //   for (key in data) {
+        //   //     if (data.hasOwnProperty(key)) {
+        //   //       params += `${key}=${data[key]}&`
+        //   //     }
+        //   //   }
+        //   //   params.slice(params.length - 1)
+        //   //   return params
+        //   // }
+        //   const upperCaseType = type.toUpperCase()
+        //   const params = formatData(data)
+        
+        //   const req = new XMLHttpRequest()
+        
+        //   req.onreadystatechange = () => {
+        //     if (req.readyState === 4) {
+        //       if (req.status >= 200 && req.status < 300 || req.status === 304) {
+        //         success(req)
+        //       } else {
+        //         error(req)
+        //       }
+        //     }
+        //   }
+        
+        //   if (upperCaseType === 'GET') {
+        //     req.open(upperCaseType, url + params)
+        //     req.send()
+        //   }
+        
+        //   if (upperCaseType === 'POST') {
+        //     req.open(upperCaseType, url)
+        //     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+        //     req.send(params)
+        //   }
+        // }
+        
+        // btn.addEventListener('click', () => ajax({
+        //   type: 'GET',
+        //   url: API + input.value,
+        //   success: function (req) {
+        //     const json = JSON.parse(req.responseText)
+        //     const { data: { songList } } = json
+        //     // 解构，这样可读性其实还不如 const songList = json.data.songList，所以没有必要什么时候都用 es6 的简写
+        //     const html = songList.map(e => `<li>${e.songMid}</li>`).join('')
+        //     // 其实一次 map 就可以
+        //     ul.innerHTML = html
+        //   },
+        // }))
+        // Level 1，没有封装
+            btn.addEventListener('click', () => {
+            const req = new XMLHttpRequest()
+            const keyword = input.value;
+            req.open('GET', API + keyword);
+            req.onreadystatechange = function () {
+                if (req.readyState === 4) {
+                if (req.status >= 200 && req.status < 300 || req.status === 304) {
+                    const json = JSON.parse(req.responseText)
+                    const { data } = json
+                    const { songList } = data
+                    const idList = songList.map(e => e.songMid)
+                    const html = idList.map(str => `<li>${str}</li>`).join('')
+                    ul.innerHTML = html
+                } else {
+                    console.log('请求错误')
+                }
+                }
+            }
+            }) -->
+            <!-- <script>
+            
+            const req = new XMLHttpRequest()
+            const keyword = input.value;
+            req.open('GET', API + keyword);
+            req.onreadystatechange = function () {
+                if (req.readyState === 4) {
+                if (req.status >= 200 && req.status < 300 || req.status === 304) {
+                    const json = JSON.parse(req.responseText)
+                    const { data } = json
+                    const { songList } = data
+                    const idList = songList.map(e => e.songMid)
+                    const html = idList.map(str => `<li>${str}</li>`).join('')
+                    ul.innerHTML = html
+                } else {
+                    console.log('请求错误')
+                }
+                }
+            }
+            }) </script> -->
+            
+            
+
+  
+</body>
+</html>
